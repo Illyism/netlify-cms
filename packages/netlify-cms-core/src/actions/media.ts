@@ -5,7 +5,7 @@ import { AnyAction } from 'redux';
 import { isAbsolutePath } from 'netlify-cms-lib-util';
 import { selectMediaFilePath } from '../reducers/entries';
 import { selectMediaFileByPath } from '../reducers/mediaLibrary';
-import { getMediaFile, waitForMediaLibraryToLoad, getMediaDisplayURL } from './mediaLibrary';
+import { getMediaFile, persistMedia, waitForMediaLibraryToLoad, getMediaDisplayURL } from './mediaLibrary';
 
 export const ADD_ASSETS = 'ADD_ASSETS';
 export const ADD_ASSET = 'ADD_ASSET';
@@ -123,5 +123,14 @@ export function getAsset({ collection, entry, path, field }: GetAssetArgs) {
     }
 
     return asset;
+  };
+}
+
+
+export function addCustomAsset(file: File) {
+  return async (dispatch: ThunkDispatch<State, {}, AnyAction>, getState: () => State) => {
+    console.log('addCustomAsset', { file })
+
+    return await (persistMedia(file))(dispatch, getState)
   };
 }

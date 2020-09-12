@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { FieldLabel, colors, transitions, lengths, borders } from 'netlify-cms-ui-default';
 import { resolveWidget, getEditorComponents } from 'Lib/registry';
 import { clearFieldErrors, tryLoadEntry } from 'Actions/entries';
-import { addAsset, boundGetAsset } from 'Actions/media';
+import { addAsset, addCustomAsset, boundGetAsset } from 'Actions/media';
 import { selectIsLoadingAsset } from 'Reducers/medias';
 import { query, clearSearch } from 'Actions/search';
 import {
@@ -103,6 +103,7 @@ class EditorControl extends React.Component {
     onChange: PropTypes.func.isRequired,
     openMediaLibrary: PropTypes.func.isRequired,
     addAsset: PropTypes.func.isRequired,
+    addCustomAsset: PropTypes.func.isRequired,
     removeInsertedMedia: PropTypes.func.isRequired,
     onValidate: PropTypes.func,
     processControlRef: PropTypes.func,
@@ -158,6 +159,7 @@ class EditorControl extends React.Component {
       clearMediaControl,
       removeMediaControl,
       addAsset,
+      addCustomAsset,
       removeInsertedMedia,
       onValidate,
       processControlRef,
@@ -259,6 +261,7 @@ class EditorControl extends React.Component {
               onRemoveMediaControl={removeMediaControl}
               onRemoveInsertedMedia={removeInsertedMedia}
               onAddAsset={addAsset}
+              addCustomAsset={addCustomAsset}
               getAsset={boundGetAsset}
               hasActiveStyle={isSelected || this.state.styleActive}
               setActiveStyle={() => this.setState({ styleActive: true })}
@@ -332,6 +335,7 @@ const mapDispatchToProps = dispatch => {
       removeMediaControl,
       removeInsertedMedia,
       addAsset,
+      addCustomAsset,
       query,
       clearSearch,
       clearFieldErrors,

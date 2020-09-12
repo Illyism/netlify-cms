@@ -17,6 +17,7 @@ import NetlifyCmsWidgetImage from 'netlify-cms-widget-image';
 import NetlifyCmsWidgetFile from 'netlify-cms-widget-file';
 import NetlifyCmsWidgetSelect from 'netlify-cms-widget-select';
 import NetlifyCmsWidgetMarkdown from 'netlify-cms-widget-markdown';
+import XRWidgetMarkdown from 'xr-widget-markdown';
 import NetlifyCmsWidgetList from 'netlify-cms-widget-list';
 import NetlifyCmsWidgetObject from 'netlify-cms-widget-object';
 import NetlifyCmsWidgetRelation from 'netlify-cms-widget-relation';
@@ -47,6 +48,7 @@ CMS.registerWidget([
   NetlifyCmsWidgetFile.Widget(),
   NetlifyCmsWidgetSelect.Widget(),
   NetlifyCmsWidgetMarkdown.Widget(),
+  XRWidgetMarkdown.Widget(),
   NetlifyCmsWidgetList.Widget(),
   NetlifyCmsWidgetObject.Widget(),
   NetlifyCmsWidgetRelation.Widget(),
