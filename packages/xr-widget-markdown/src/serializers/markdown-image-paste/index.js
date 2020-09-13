@@ -1,10 +1,11 @@
+import { markdownToSlate } from '../../serializers';
 
-let i = 0
 /**
  * getAsset('test.jpg') => returns an AssetProxy
- *
+ * @param {string} markdown
  */
-export const detectExternalImagesInAST = async (ast, { addCustomAsset }) => {
+export const saveExternalImagesLocally = async (markdown, { addCustomAsset }) => {
+  const ast = markdownToSlate(markdown)
   for (const line of ast.nodes) {
     if (line.type !== 'shortcode') {
       continue;
@@ -20,31 +21,40 @@ export const detectExternalImagesInAST = async (ast, { addCustomAsset }) => {
       continue;
     }
 
-    const blob = await fetch(url).then(response => response.blob());
-    const file = new File([blob], 'img-' + i++)
-    await addCustomAsset(file)
-
-    const objectURL = URL.createObjectURL(blob);
-    line.data.shortcodeData.image = objectURL
-
-    console.log('image added')
+    const extracted = await extractImage(url, { addCustomAsset })
+    if (extracted) {
+      markdown = markdown.replaceAll(extracted.originalURL, extracted.path)
+      console.log('Extracted: %s => %s', extracted.originalURL, extracted.path)
+    }
   }
+
+  return markdown
 };
 
-async function getImageAsBlob(url) {
-  const blob = await fetch(url).then(response => response.blob());
+async function extractImage(originalURL, { addCustomAsset }) {
+  const blob = await fetch(originalURL).then(response => response.blob());
 
   if (blob.size <= 0) {
-    return '';
+    return
   }
-
+  
   const objectURL = URL.createObjectURL(blob);
-  const path = getPathForBlobURL(blob, objectURL);
+  const name = getNameForBlobURL(blob, objectURL);
+  
+  const file = new File([blob], name)
+  await addCustomAsset(file) // add it to the store
 
-  return { url: objectURL, path };
+  return {
+    originalURL,
+    objectURL,
+    blob,
+    file,
+    name,
+    path: `/assets/uploads/${name}`,
+  }
 }
 
-function getPathForBlobURL(blob, objectURL) {
+function getNameForBlobURL(blob, objectURL) {
   const guid = objectURL.substr(objectURL.lastIndexOf('/') + 1);
 
   let extension = '';
@@ -58,5 +68,5 @@ function getPathForBlobURL(blob, objectURL) {
     extension = '.webp';
   }
 
-  return `/assets/uploads/${guid}${extension}`;
+  return `${guid}${extension}`;
 }

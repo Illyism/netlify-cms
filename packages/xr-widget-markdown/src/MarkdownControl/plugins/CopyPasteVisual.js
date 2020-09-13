@@ -4,7 +4,7 @@ import base64 from 'slate-base64-serializer';
 import isHotkey from 'is-hotkey';
 import { slateToMarkdown, markdownToSlate, markdownToHtml } from '../../serializers';
 import { htmlToMarkdown } from '../../serializers/html-to-markdown';
-import { detectExternalImagesInAST } from '../../serializers/markdown-image-paste';
+import { saveExternalImagesLocally } from '../../serializers/markdown-image-paste';
 
 // import { actions as notifActions } from 'redux-notifications';
 // const { notifSend } = notifActions
@@ -48,8 +48,11 @@ const CopyPasteVisual = ({ addCustomAsset, getAsset, resolveWidget }) => {
       } else {
         markdown = data.getData('text/plain');
       }
-      const ast = markdownToSlate(markdown);
-      await detectExternalImagesInAST(ast, { addCustomAsset });
+      
+      markdown = await saveExternalImagesLocally(markdown, { addCustomAsset });
+      console.log(markdown)
+      
+      const ast = markdownToSlate(markdown)
       const doc = Document.fromJSON(ast);
       return editor.insertFragment(doc);
     },
