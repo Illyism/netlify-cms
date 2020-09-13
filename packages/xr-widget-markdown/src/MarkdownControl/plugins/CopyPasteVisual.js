@@ -4,7 +4,7 @@ import base64 from 'slate-base64-serializer';
 import isHotkey from 'is-hotkey';
 import { slateToMarkdown, markdownToSlate, markdownToHtml } from '../../serializers';
 import { htmlToMarkdown } from '../../serializers/html-to-markdown';
-import { saveExternalImagesLocally } from '../../serializers/markdown-image-paste';
+import saveExternalImagesLocally from '../../serializers/markdown-images/saveExternalImagesLocally';
 
 // import { actions as notifActions } from 'redux-notifications';
 // const { notifSend } = notifActions

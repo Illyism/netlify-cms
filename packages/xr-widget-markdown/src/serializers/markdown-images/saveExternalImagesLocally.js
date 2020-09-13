@@ -1,10 +1,10 @@
-import { markdownToSlate } from '../../serializers';
+import { markdownToSlate } from '../';
 
 /**
  * getAsset('test.jpg') => returns an AssetProxy
  * @param {string} markdown
  */
-export const saveExternalImagesLocally = async (markdown, { addCustomAsset }) => {
+export default async function saveExternalImagesLocally(markdown, { addCustomAsset }) {
   const ast = markdownToSlate(markdown)
   for (const line of ast.nodes) {
     if (line.type !== 'shortcode') {
@@ -18,6 +18,9 @@ export const saveExternalImagesLocally = async (markdown, { addCustomAsset }) =>
     }
     const url = line.data.shortcodeData.image;
     if (url.indexOf('http') !== 0) {
+      continue;
+    }
+    if (url.indexOf('localhost') > -1) {
       continue;
     }
 

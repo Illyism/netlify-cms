@@ -3,9 +3,6 @@ import unified from 'unified';
 import u from 'unist-builder';
 import markdownToRemarkPlugin from 'remark-parse';
 import remarkToMarkdownPlugin from 'remark-stringify';
-import remarkToRehype from 'remark-rehype';
-import rehypeToHtml from 'rehype-stringify';
-import remarkToRehypeShortcodes from './remarkRehypeShortcodes';
 import remarkWrapHtml from './remarkWrapHtml';
 import remarkToSlate from './remarkSlate';
 import remarkSquashReferences from './remarkSquashReferences';
@@ -15,6 +12,14 @@ import remarkStripTrailingBreaks from './remarkStripTrailingBreaks';
 import remarkAllowHtmlEntities from './remarkAllowHtmlEntities';
 import slateToRemark from './slateRemark';
 import { getEditorComponents } from '../MarkdownControl';
+
+// keep in sync with XR-vue project
+import MarkdownIt from 'markdown-it'
+import MarkdownItAttrs from 'markdown-it-attrs'
+import MarkdownItAnchor from 'markdown-it-anchor'
+const md = new MarkdownIt({ html: true })
+  .use(MarkdownItAttrs)
+  .use(MarkdownItAnchor)
 
 /**
  * This module contains all serializers for the Markdown widget.
@@ -143,24 +148,8 @@ export const remarkToMarkdown = obj => {
 /**
  * Convert Markdown to HTML.
  */
-export const markdownToHtml = (markdown, { getAsset, resolveWidget } = {}) => {
-  const mdast = markdownToRemark(markdown);
-
-  const hast = unified()
-    .use(remarkToRehypeShortcodes, { plugins: getEditorComponents(), getAsset, resolveWidget })
-    .use(remarkToRehype, { allowDangerousHTML: true })
-    .runSync(mdast);
-
-  const html = unified()
-    .use(rehypeToHtml, {
-      allowDangerousHtml: true,
-      allowDangerousCharacters: true,
-      closeSelfClosing: true,
-      entities: { useNamedReferences: true },
-    })
-    .stringify(hast);
-
-  return html;
+export const markdownToHtml = (markdown) => {
+  return md.render(markdown)
 };
 
 /**
