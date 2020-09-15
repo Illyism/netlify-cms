@@ -27,7 +27,6 @@ export default async function saveExternalImagesLocally(markdown, { addCustomAss
     const extracted = await extractImage(url, { addCustomAsset })
     if (extracted) {
       markdown = markdown.replaceAll(extracted.originalURL, extracted.path)
-      console.log('Extracted: %s => %s', extracted.originalURL, extracted.path)
     }
   }
 

@@ -26,18 +26,9 @@ const CopyPasteVisual = ({ addCustomAsset, getAsset, resolveWidget }) => {
         return next();
       }
 
-      // store.dispatch(notifSend({
-      //   message: 'Pasting...',
-      //   dismissAfter: 20000,
-      //   kind: 'success',
-      // }))
-
-      // console.log({store})
-
       if (data.types.includes('application/x-slate-fragment')) {
         const sast = data.getData('application/x-slate-fragment');
         const fragment = base64.deserializeNode(sast);
-        console.log(sast, fragment, fragment.toJSON());
         return editor.insertFragment(fragment);
       }
 
@@ -50,7 +41,6 @@ const CopyPasteVisual = ({ addCustomAsset, getAsset, resolveWidget }) => {
       }
       
       markdown = await saveExternalImagesLocally(markdown, { addCustomAsset });
-      console.log(markdown)
       
       const ast = markdownToSlate(markdown)
       const doc = Document.fromJSON(ast);

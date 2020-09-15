@@ -129,8 +129,6 @@ export function getAsset({ collection, entry, path, field }: GetAssetArgs) {
 
 export function addCustomAsset(file: File) {
   return async (dispatch: ThunkDispatch<State, {}, AnyAction>, getState: () => State) => {
-    console.log('addCustomAsset', { file })
-
     return await (persistMedia(file))(dispatch, getState)
   };
 }

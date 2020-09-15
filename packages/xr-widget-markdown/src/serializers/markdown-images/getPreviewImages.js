@@ -23,7 +23,6 @@ export default function getPreviewImage(markdown, { getAsset }) {
         const asset = getAsset(url)
         if (asset.url) {
             markdown = markdown.replaceAll(url, asset.url)
-            console.log('Rehyped: %s => %s', url, asset.url)
         }
     }
 
