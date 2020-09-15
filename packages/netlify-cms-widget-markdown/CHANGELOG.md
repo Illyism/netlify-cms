@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.12.5](https://github.com/netlify/netlify-cms/tree/master/packages/netlify-cms-widget-markdown/compare/netlify-cms-widget-markdown@2.12.4...netlify-cms-widget-markdown@2.12.5) (2020-09-15)
+
+
+### Bug Fixes
+
+* **deps:** update dependency re-resizable to v6 ([#4308](https://github.com/netlify/netlify-cms/tree/master/packages/netlify-cms-widget-markdown/issues/4308)) ([de068cb](https://github.com/netlify/netlify-cms/tree/master/packages/netlify-cms-widget-markdown/commit/de068cba1d44ec76e47e28d724427a9f4a53e0fd))
+
+
+
+
+
+## 2.12.4 (2020-09-08)
+
+
+### Reverts
+
+* Revert "chore(release): publish" ([828bb16](https://github.com/netlify/netlify-cms/tree/master/packages/netlify-cms-widget-markdown/commit/828bb16415b8c22a34caa19c50c38b24ffe9ceae))
+
+
+
+
+
 ## 2.12.3 (2020-08-20)
 
 
